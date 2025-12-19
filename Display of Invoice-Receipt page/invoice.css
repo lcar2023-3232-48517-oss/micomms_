@@ -1,0 +1,438 @@
+/* Importing fonts */
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --header-height: 10%; /* for mobile use */
+
+    /* Colors */
+     --primary-color: #09E784;
+     --secondary-color: #01C8DC;
+     --tertiary-color: #20DFDA;
+     --black-color: #000000;
+     --green-color: #1ED7B5;
+
+    /* Font size */
+    --font-size-s: 0.9rem;
+    --font-size-n: 1rem;
+    --font-size-m: 1.12rem;
+    --font-size-l: 1.5rem;
+    --font-size-xl: 2rem;
+    --font-size-xxl: 2.3rem;
+    --font-size-3xl: 2.5rem;
+
+    /* Font weight */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Site max width */
+    --site-max-width: 1300px;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Stylings for whole site */
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+img {
+    width: 100%;
+}
+
+.section-content {
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: var(--site-max-width);
+}
+
+/* Navbar styling */
+.logo-container {
+    display: flex;
+    gap: 10px;
+}
+
+.logo {
+    width: 55px;
+    height: 60px;
+}
+
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+    background-image: linear-gradient(to right, #09E784 , #01C8DC, #20DFDA);
+}
+
+header .navbar {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar .nav-logo .logo-text {
+    margin-top: 13px;
+    color: white;
+    font-style: italic;
+    font-size: var(--font-size-xxl);
+    font-weight: var(--font-weight-semibold);
+    font-family: 'Righteous';
+}
+
+/* Search bar styling */
+.nav-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 550px;
+    margin: 0 30px;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    height: 38px;
+}
+
+/* Input styling */
+.nav-search input {
+    flex: 1;
+    border: none;
+    padding: 6px 15px;
+    outline: none;
+    font-size: 1rem;
+    height: 100%;
+}
+
+/* Search button styling */
+.nav-search button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    height: 100%;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+
+.nav-search button i {
+    color: var(--secondary-color);
+    font-size: 1.6rem;
+    transition: 0.3s ease;
+}
+
+.nav-search button i:hover {
+    color: var(--primary-color);
+}
+
+/* Icons styling */
+.navbar .nav-menu{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navbar .nav-menu .material-icons{
+    padding: 10px 2px;
+    color: #036087;
+    font-size: var(--font-size-xl);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.navbar .nav-menu .material-icons:hover {
+    color: white;
+}
+
+.navbar .nav-menu .acc:hover {
+    color: black !important;
+}
+
+/* Inovice */
+.invoice-container {
+    background: #fff;
+    width: 380px;
+    margin: 100px auto;
+    margin-top: 20vh;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.main h2 {
+    margin: 0;
+}
+
+.back-arrow {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.send-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f7f7;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.send-btn {
+    background: var(--green-color);
+    color: var(--black-color);
+    font-weight: var(--font-weight-semibold);
+    margin: 10px;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    color: var(--green-color);
+    border: 1px solid transparent;
+    border-color: var(--green-color);
+    background-color: transparent;
+}
+
+.order-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.order-id {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sub {
+    margin-top: 5px;
+}
+
+.box {
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1.5px solid var(--green-color);
+    background-color: transparent;
+    padding: 2px 6px;
+}
+
+.copy {
+    font-size: var(--font-size-s);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.section-title {
+    font-weight: var(--font-weight-semibold);
+}
+
+.section-subtitle {
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-end;
+    flex: 1; 
+}
+
+.other-information {
+    margin-top: 15px;
+}
+
+.other-information h4, .order-details h4{
+    margin-bottom: 6px;
+    font-size: var(--font-size-m);
+}
+
+.info-container {
+    display: flex; gap: 20px; 
+}
+
+.section-info { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 8px; min-width: 140px; 
+    font-weight: 600; 
+} 
+
+.section-info {
+    font-size: var(--font-size-s);
+}
+
+.section-sub-info { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    align-items: flex-end;
+    flex: 1; 
+}
+
+.order-details {
+    margin-top: 15px;
+}
+
+.order-details h4 {
+    margin-bottom: 10px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+.total-section {
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+.line {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+hr {
+    border: 0.5px solid #ddd;
+    margin-top: 10px;
+}
+
+/* For mobile */
+/* Responsive media query code for max width 900px */
+@media screen and (max-width: 900px) {
+    :root {
+        --font-size-m: 1rem;
+        --font-size-l: 1.3rem;
+        --font-size-xl: 1.5rem;
+        --font-size-xxl: 1.8rem;
+    }
+}
+
+/* Invoice mobile styling */
+@media (max-width: 600px) {
+
+  /* Adjust container width and padding */
+  .invoice-container {
+    width: 90%;
+    margin: 100px auto;
+    margin-top: 15vh;
+    padding: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  /* Header spacing */
+  .main {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .invoice-container {
+    margin: 100px 20px;
+  }
+
+  .main h2 {
+    font-size: 1.2rem;
+  }
+
+  /* Send box */
+  .send-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .send-btn {
+    width: 100%;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  /* Order info section */
+  .order-info {
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .order-id {
+    flex-wrap: wrap;
+  }
+
+  .order-id .box {
+    margin-top: 4px;
+  }
+
+  .section-title, 
+  .section-subtitle {
+    font-size: 13px;
+  }
+
+  /* Text size adjustments */
+  .section-info p,
+  .section-sub-info p,
+  .order-details p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .other-information h4,
+  .order-details h4 {
+    font-size: 14px;
+  }
+
+  /* Order total */
+  .grand-total {
+    font-size: 14px;
+  }
+
+  hr {
+    margin-top: 8px;
+  }
+  
+}
