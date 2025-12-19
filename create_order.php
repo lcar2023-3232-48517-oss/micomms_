@@ -24,18 +24,15 @@ try {
     $order_items = json_decode($_POST['order_items'], true);
     $total = floatval($_POST['total'] ?? 0);
     
-    // CREATE ORDER (5 parameters)
     $stmt = $pdo->prepare("INSERT INTO order_tb (user_id, order_date, order_total, order_payment_stat, order_status) VALUES (?, CURDATE(), ?, 'Pending', 'tracking')");
-    $stmt->execute([$user_id, $total]);  // ✅ 2 parameters match 2 ?
+    $stmt->execute([$user_id, $total]);  
     $order_id = $pdo->lastInsertId();
     
-    // ADD 2 SAMPLE ITEMS (5 parameters each)
+
     $stmt_item = $pdo->prepare("INSERT INTO order_item_tb (order_id, product_id, order_item_quantity, order_item_price_each, order_item_subtotal) VALUES (?, ?, ?, ?, ?)");
     
-    // Item 1: 2 x ₱100 = ₱200
     $stmt_item->execute([$order_id, 1, 2, 100, 200]);
-    
-    // Item 2: 1 x ₱220 = ₱220  
+ 
     $stmt_item->execute([$order_id, 1, 1, 220, 220]);
     
     echo json_encode(['success' => true, 'order_id' => $order_id]);
