@@ -290,7 +290,7 @@ closeCheckoutBtn.addEventListener("click", () => {
     let subtotal = 0;
     
     basketBoxes.forEach(basketCard => {
-        const productId = basketCard.dataset.productId; // NOW USING product_id!
+        const productId = basketCard.dataset.productId; 
         const title = basketCard.querySelector(".basket-product-title").textContent;
         const priceText = basketCard.querySelector(".basket-price").textContent.replace("Php", "").trim();
         const qty = parseInt(basketCard.querySelector(".number").textContent) || 1;
@@ -302,8 +302,7 @@ closeCheckoutBtn.addEventListener("click", () => {
     confirmOrderBtn.addEventListener("click", async () => {
     console.log('🔥 CONFIRM CLICKED!');
     
-    // Get basket items from DOM
-    const basketContent = document.querySelector('.basket-content, .basket-container, #basket'); // Your basket class
+    const basketContent = document.querySelector('.basket-content, .basket-container, #basket'); 
     const basketBoxes = basketContent ? basketContent.querySelectorAll('.basket-box, .basket-item') : [];
     
     if (basketBoxes.length === 0) {
@@ -315,12 +314,12 @@ closeCheckoutBtn.addEventListener("click", () => {
     let subtotal = 0;
     
     basketBoxes.forEach(basketCard => {
-        const productId = basketCard.dataset.productId || basketCard.dataset.product_id; // Your data attribute
+        const productId = basketCard.dataset.productId || basketCard.dataset.product_id; 
         const title = basketCard.querySelector('.basket-product-title, h3, .title')?.textContent || 'Unknown';
         const priceText = basketCard.querySelector('.basket-price, .price')?.textContent?.replace('₱', '').replace('Php', '').trim() || '0';
         const qtyElement = basketCard.querySelector('.number, .qty, .quantity');
-        const basketContent = document.querySelector('.basket-content'); // CHANGE TO YOUR BASKET CLASS
-        const basketBoxes = basketContent.querySelectorAll('.basket-box'); // CHANGE TO YOUR BASKET ITEM CLASS
+        const basketContent = document.querySelector('.basket-content'); 
+        const basketBoxes = basketContent.querySelectorAll('.basket-box'); 
         const qty = qtyElement ? parseInt(qtyElement.textContent) : 1;
         
         const price = parseFloat(priceText);
@@ -333,7 +332,7 @@ closeCheckoutBtn.addEventListener("click", () => {
     const formData = new FormData();
     formData.append('order_items', JSON.stringify(orderItems));
     formData.append('subtotal', subtotal);
-    formData.append('total', subtotal + 50); // + shipping
+    formData.append('total', subtotal + 50); 
     formData.append('shipping_address', 'Default address');
     
     try {

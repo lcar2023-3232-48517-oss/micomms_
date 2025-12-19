@@ -12,7 +12,6 @@ try {
     
     $order_id = (int)($_GET['order_id'] ?? 0);
     
-    // Get CLIENT (user) info
     $stmt = $pdo->prepare("
         SELECT o.*, u.user_name as client_name, u.user_email as client_email 
         FROM order_tb o 
@@ -27,12 +26,10 @@ try {
         exit;
     }
     
-    // Get items
     $stmt_items = $pdo->prepare("SELECT * FROM order_item_tb WHERE order_id = ?");
     $stmt_items->execute([$order_id]);
     $items = $stmt_items->fetchAll(PDO::FETCH_ASSOC);
-    
-    // ✅ YOUR EXACT REQUEST
+
     echo json_encode([
         'order' => $order,
         'seller_name' => 'MiCOMMS Store',

@@ -9,7 +9,7 @@
 }
 
 :root {
-    --header-height: 10%; /* for mobile use */
+    --header-height: 10%; 
 
     /* Colors */
      --primary-color: #09E784;
@@ -356,7 +356,7 @@ hr {
 /* Invoice mobile styling */
 @media (max-width: 600px) {
 
-  /* Adjust container width and padding */
+  
   .invoice-container {
     width: 90%;
     margin: 100px auto;

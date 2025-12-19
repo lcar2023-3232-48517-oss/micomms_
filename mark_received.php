@@ -10,7 +10,6 @@ $host = 'localhost'; $dbname = 'micomms_database'; $username = 'root'; $password
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     
-    // Update order status + received date
     $stmt = $pdo->prepare("
         UPDATE order_tb 
         SET order_status = 'received', received_date = NOW() 

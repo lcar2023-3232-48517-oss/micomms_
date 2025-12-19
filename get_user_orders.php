@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-ob_clean(); // Kill any HTML output
+ob_clean(); 
 
 $user_id = $_GET['user_id'] ?? 1;
 $status = $_GET['status'] ?? 'tracking';

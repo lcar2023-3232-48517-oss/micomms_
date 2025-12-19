@@ -1,6 +1,6 @@
 <?php
 session_start();
-header('Content-Type: application/json'); // ✅ FORCE JSON
+header('Content-Type: application/json'); 
 
 $host = 'localhost';
 $dbname = 'micomms_database'; 
@@ -16,8 +16,7 @@ try {
         echo json_encode(['error' => 'No order ID']);
         exit;
     }
-    
-    // Get order
+
     $stmt = $pdo->prepare("SELECT * FROM order_tb WHERE order_id = ?");
     $stmt->execute([$order_id]);
     $order = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,12 +26,10 @@ try {
         exit;
     }
     
-    // Get items
     $stmt = $pdo->prepare("SELECT * FROM order_item_tb WHERE order_id = ?");
     $stmt->execute([$order_id]);
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    // ✅ PURE JSON RESPONSE
     echo json_encode([
         'order' => $order,
         'items' => $items

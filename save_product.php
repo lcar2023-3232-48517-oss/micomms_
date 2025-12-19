@@ -10,8 +10,7 @@ $password = '';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // SECURITY: Verify session admin_id matches POST admin_id
+
     $session_admin_id = $_SESSION['admin_id'] ?? 0;
     $admin_id = (int)$_POST['admin_id'];
     if ($session_admin_id != $admin_id) {
@@ -50,9 +49,8 @@ try {
     } elseif ($action === 'update') {
         $product_id = (int)$_POST['product_id'];
         
-        // Handle image update BEFORE main update
         if (isset($_FILES['product_img']) && $_FILES['product_img']['error'] === UPLOAD_ERR_OK) {
-            // Get old image path
+
             $oldImgStmt = $pdo->prepare("SELECT product_img FROM product_tb WHERE product_id = ? AND admin_id = ?");
             $oldImgStmt->execute([$product_id, $admin_id]);
             $oldImg = $oldImgStmt->fetchColumn();
@@ -60,15 +58,13 @@ try {
             if ($oldImg && file_exists("uploads/products/$oldImg")) {
                 unlink("uploads/products/$oldImg");
             }
-            
-            // Upload new image
+
             $uploadDir = 'uploads/products/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
             $fileName = uniqid() . '_' . basename($_FILES['product_img']['name']);
             $filePath = $uploadDir . $fileName;
             
             if (move_uploaded_file($_FILES['product_img']['tmp_name'], $filePath)) {
-                // Update with image
                 $stmt = $pdo->prepare("UPDATE product_tb SET product_name=?, product_desc=?, product_price=?, product_stock=?, category_id=?, product_img=? WHERE product_id=? AND admin_id=?");
                 $stmt->execute([
                     $_POST['product_name'], 
@@ -81,7 +77,6 @@ try {
                     $admin_id
                 ]);
             } else {
-                // Image upload failed - update without image
                 $stmt = $pdo->prepare("UPDATE product_tb SET product_name=?, product_desc=?, product_price=?, product_stock=?, category_id=? WHERE product_id=? AND admin_id=?");
                 $stmt->execute([
                     $_POST['product_name'], $_POST['product_desc'], $_POST['product_price'],
@@ -89,7 +84,6 @@ try {
                 ]);
             }
         } else {
-            // No image - regular update
             $stmt = $pdo->prepare("UPDATE product_tb SET product_name=?, product_desc=?, product_price=?, product_stock=?, category_id=? WHERE product_id=? AND admin_id=?");
             $stmt->execute([
                 $_POST['product_name'], $_POST['product_desc'], $_POST['product_price'],

@@ -11,10 +11,8 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // FIXED: Use session first, then GET param, with integer casting
     $admin_id = (int)($_GET['admin_id'] ?? $_SESSION['admin_id'] ?? 0);
     
-    // Security: Verify session exists
     if (!$admin_id || !isset($_SESSION['admin_id']) || $_SESSION['admin_id'] != $admin_id) {
         echo json_encode([]);
         exit();

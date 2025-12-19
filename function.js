@@ -7,8 +7,6 @@ let selectedItem = null;
 let products = [];
 let addBtn, addModal, editModal, productContainer;
 
-
-// CRITICAL: Wait for ADMIN_ID before any data loading
 function initAfterAdminID() {
   if (typeof window.ADMIN_ID === 'undefined' || !window.ADMIN_ID) {
     console.log('⏳ Waiting for ADMIN_ID...');
@@ -21,7 +19,6 @@ function initAfterAdminID() {
   syncWithDatabase();
 }
 
-// OVERRIDE loadProfileData to check ADMIN_ID first
 function loadProfileData() {
   if (!window.ADMIN_ID) {
     console.log('⏳ ADMIN_ID not ready, retrying...');
@@ -64,17 +61,16 @@ async function syncWithDatabase() {
     const response = await fetch(`get_products.php?admin_id=${window.ADMIN_ID}`);
     products = await response.json();
     
-    // FIXED ORDER: Overview first → View As syncs
-    renderProductOverviewFromDB();  // Products with edit buttons
-    updateViewAsFromDB();           // Clean view without buttons
+    renderProductOverviewFromDB();  
+    updateViewAsFromDB();           
   } catch(e) {
     products = [];
   }
 }
 
 function updateViewAsFromDB() {
-  console.log('🔍 View As DEBUG - products length:', products.length); // ADD THIS
-  console.log('🔍 View As DEBUG - products:', products); // ADD THIS
+  console.log('🔍 View As DEBUG - products length:', products.length);
+  console.log('🔍 View As DEBUG - products:', products); 
   
   const productsList = document.getElementById("productsList");
   if (!productsList) return;
@@ -93,7 +89,7 @@ function updateViewAsFromDB() {
   
   console.log('🔍 Rendering', products.length, 'products in View As');
   
-  productsList.innerHTML = ''; // CLEAR completely
+  productsList.innerHTML = ''; 
   
   if (products.length === 0) {
     productsList.innerHTML = `
@@ -104,9 +100,8 @@ function updateViewAsFromDB() {
     return;
   }
   
-  // LOOP ALL PRODUCTS - no early termination
   products.forEach((product, index) => {
-    console.log('🔍 Rendering product', index + 1, ':', product.product_name); // DEBUG
+    console.log('🔍 Rendering product', index + 1, ':', product.product_name); 
     
     const viewCard = document.createElement("div");
     viewCard.className = "product-card";
@@ -213,19 +208,17 @@ function renderProductOverviewFromDB() {
 
 /* ------------------ MAIN INITIALIZATION ------------------ */
 document.addEventListener("DOMContentLoaded", async () => {
-  // Declare variables first
+
   addBtn = document.querySelector(".add-prod");
   addModal = document.getElementById("addProductModal");
   editModal = document.getElementById("editModal");
   productContainer = document.querySelector(".products-card");
   initAfterAdminID();
- 
-  // FORCE HIDE ALL MODALS FIRST
+
   document.querySelectorAll('.modal, #deleteModal, #editModal, #addProductModal, #editProfileModal').forEach(modal => {
     if (modal) modal.style.display = 'none';
   });
  
-  // LOAD FROM DATABASE
   await syncWithDatabase();
   loadProfileData();
 
@@ -260,8 +253,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (modal) modal.style.display = "none";
   }
 
-
-  // EVENT LISTENERS
   const closeModalBtn = document.getElementById("closeModalBtn");
   const cancelAddBtn = document.getElementById("cancelAddBtn");
   if (closeModalBtn) closeModalBtn.addEventListener("click", () => closeModal(addModal));
@@ -304,8 +295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Product name is required");
       return;
     }
-   
-    // SAVE TO DATABASE
+
   function saveProduct({isEdit = false} = {}) {
   const name = isEdit ? document.getElementById("editTitle").value.trim() : document.getElementById("productName").value.trim();
   const desc = isEdit ? document.getElementById("editDesc").value.trim() : document.getElementById("productDesc").value.trim();
@@ -318,7 +308,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
   
-  // FIXED: Always create formData first
   const formData = new FormData();
   if (isEdit && selectedItem && selectedItem.dataset.productId) {
     formData.append('product_id', selectedItem.dataset.productId);
@@ -331,36 +320,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   formData.append('category_id', category);
   formData.append('product_stock', stock);
   
-  // FIXED: Handle image properly - either add to formData OR skip nested fetch
   if (currentImageData) {
-    // Convert base64 to blob and add to formData
     fetch(currentImageData)
       .then(res => res.blob())
       .then(blob => {
         formData.append('product_img', blob, 'product.png');
-        // NOW send the complete formData
         return fetch('save_product.php', { method: 'POST', body: formData });
       })
       .then(() => {
-        syncWithDatabase(); // Refresh after image upload
+        syncWithDatabase();
       })
       .catch(err => {
         console.error('Image upload failed:', err);
-        // Still save without image
         fetch('save_product.php', { method: 'POST', body: formData });
         syncWithDatabase();
       });
   } else {
-    // No image - send immediately
     fetch('save_product.php', { method: 'POST', body: formData })
       .then(() => syncWithDatabase());
   }
   
-  // Close modals
   if (isEdit) closeModal(editModal);
   else closeModal(addModal);
   
-  // Reset image input
   currentImageData = null;
   const productImage = document.getElementById("productImage");
   const productImagePreview = document.getElementById("productImagePreview");
@@ -368,7 +350,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (productImagePreview) productImagePreview.innerHTML = "";
 }
 
-    // LOCAL UI UPDATE
     let card;
     if (isEdit && selectedItem) {
       card = selectedItem;
@@ -480,7 +461,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     editProfileBtn.addEventListener("click", function () {
       const modal = document.getElementById("editProfileModal");
       if (!modal) return;
-      modal.style.display = "flex"; // FIXED: Changed to flex for consistency
+      modal.style.display = "flex"; 
 
 
       const nameEl = document.querySelector(".sidebar h3");
@@ -492,8 +473,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-
-  // FIXED: Profile image preview setup (moved inside DOMContentLoaded)
   const profilePicInput = document.getElementById("profilePictureInput");
   const profilePicPreview = document.getElementById("profilePicturePreview");
   if (profilePicInput && profilePicPreview) {
@@ -511,8 +490,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-
-  // FIXED: Profile save and close functions
   window.saveProfile = async function() {
   const newName = document.getElementById("profileNameInput").value.trim() || 'Seller/Admin';
   const newBio = document.getElementById("profileBioInput").value.trim();
@@ -535,11 +512,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const result = await response.json();
     
     if (result.success) {
-      // CRITICAL: Clear file input + reload profile IMMEDIATELY
       document.getElementById("profilePictureInput").value = "";
       document.getElementById("profilePicturePreview").innerHTML = "";
-      
-      // Force reload with cache-buster
+
       setTimeout(() => loadProfileData(), 500);
       alert('Profile updated!');
     } else {
@@ -636,14 +611,14 @@ function loadTracking() {
 
 async function markReceived(order_id) {
   try {
-    console.log('Marking order', order_id, 'for user', windowUSER_ID); // DEBUG
+    console.log('Marking order', order_id, 'for user', windowUSER_ID); 
     const response = await fetch('update_order_status.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({order_id: order_id, user_id: windowUSER_ID, status: 'received'})
     });
     const result = await response.json();
-    console.log('Update result:', result); // DEBUG
+    console.log('Update result:', result);
     
     if (result.success) {
       alert('✅ Order marked as received!');

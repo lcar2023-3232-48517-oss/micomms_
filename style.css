@@ -435,11 +435,11 @@ h4 {
 
 .products-img,
 .product-preview {
-  flex: 0 0 20% !important;  /* Fixed width */
+  flex: 0 0 20% !important;  
 }
 
 .prod-details {
-  flex: 1 !important;        /* Takes remaining space */
+  flex: 1 !important;        
   margin-right: 10px !important;
 }
 
@@ -524,7 +524,6 @@ h4 {
 }
 
 /* ========== MODALS ========== */
-/* Edit Profile Modal */
 .modal-profile-edit {
   background: #fff;
   width: 500px;
@@ -999,7 +998,6 @@ h4 {
   border-radius: 50%;
 }
 
-/* FIX PRODUCT IMAGES */
 .product-preview img.product-img,
 .product-img img {
   width: 100% !important;
