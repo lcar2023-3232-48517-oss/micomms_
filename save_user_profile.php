@@ -21,7 +21,6 @@ $stmt->execute();
 
 $filename = null;
 
-// HANDLE PROFILE PIC UPLOAD
 if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === 0) {
     $target_dir = "uploads/profiles/";
     $file_extension = pathinfo($_FILES["profile_pic"]["name"], PATHINFO_EXTENSION);
