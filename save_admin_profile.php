@@ -20,27 +20,22 @@ try {
         exit();
     }
     
-    // Save name/bio FIRST
     $stmt = $pdo->prepare("UPDATE admin_tb SET admin_name = ?, admin_bio = ? WHERE admin_id = ?");
     $stmt->execute([$admin_name, $admin_bio, $admin_id]);
     
     $success = true;
-    
-    // Handle profile image upload
-    // Handle profile image upload - FIXED
+
 if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
     $uploadDir = 'uploads/profiles/';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
     
-    // CRITICAL: Delete old image FIRST (even if failed, try anyway)
     $oldImgStmt = $pdo->prepare("SELECT admin_profile_pic FROM admin_tb WHERE admin_id = ?");
     $oldImgStmt->execute([$admin_id]);
     $oldImg = $oldImgStmt->fetchColumn();
     if ($oldImg && file_exists($uploadDir . $oldImg)) {
-        unlink($uploadDir . $oldImg); // FORCE DELETE
+        unlink($uploadDir . $oldImg); 
     }
-    
-    // Save new image with UNIQUE name + timestamp
+
     $fileName = uniqid() . '_' . time() . '.png';
     $filePath = $uploadDir . $fileName;
     
@@ -51,6 +46,6 @@ if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_
     } else {
         echo json_encode(['success' => false, 'error' => 'Image upload failed']);
     }
-    exit(); // Exit after image upload
+    exit(); 
 }
 }
